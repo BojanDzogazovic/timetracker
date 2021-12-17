@@ -1,0 +1,47 @@
+.overlay {
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  /* overflow: auto; */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: relative;
+  background-color: $background_color;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid $secondary_color;
+  width: fit-content;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  -webkit-animation-name: animateModal;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animateModal;
+  animation-duration: 0.4s;
+
+  @keyframes animateModal {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  &__close {
+    color: $secondary_color;
+    position: relative;
+    top: -20px;
+    right: -10px;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}

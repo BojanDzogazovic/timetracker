@@ -1,0 +1,13 @@
+.today {
+  margin: 50px 0;
+  color: $secondary_color;
+  font-weight: 700;
+  font-size: $heading_font_size;
+  line-height: $heading_font_line_height;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 5px;
+  }
+}

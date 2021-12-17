@@ -1,0 +1,79 @@
+.table {
+  &__heading {
+    display: flex;
+    background-color: #f2f2f2;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__row {
+    display: flex;
+    width: 100%;
+  }
+
+  &__cell {
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+
+    &--heading {
+      font-weight: 700;
+      color: $secondary_color;
+      font-size: $body_font_size;
+      line-height: $heading_font_line_height;
+    }
+
+    &--body {
+      border: 0.5px solid #ecedf5;
+      font-weight: 400;
+      font-size: $body_font_size;
+      line-height: $body_font_line_height;
+      color: #5f6b8a;
+    }
+  }
+
+  &__icon {
+    margin: 5px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    &--primary {
+      color: $primary_color;
+    }
+
+    &--secondary {
+      color: $secondary_color;
+    }
+  }
+
+  .paused {
+    -webkit-animation-name: pulsate;
+    -webkit-animation-duration: 0.4s;
+    animation-name: pulsate;
+    animation-duration: 0.4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+    @keyframes pulsate {
+      from {
+        transform: scale();
+      }
+      to {
+        transform: scale(1.4);
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+.loader {
+  position: relative;
+  width: 100%;
+  height: 25%;
+  padding: 10%;
+  box-sizing: border-box;
+
+  &:after {
+    content: "";
+    position: absolute;
+    height: 10px;
+    width: 20%;
+    border-radius: 10px;
+    animation-name: loadingAnimation;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+
+    @keyframes loadingAnimation {
+      0% {
+        background-color: $primary_color;
+        left: 0;
+      }
+      100% {
+        background-color: $secondary_color;
+        left: 80%;
+      }
+    }
+  }
+}

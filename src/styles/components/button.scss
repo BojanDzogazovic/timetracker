@@ -1,0 +1,41 @@
+.tracking-ctas {
+  display: flex;
+  justify-content: flex-end;
+  margin: 35px 0;
+}
+
+.tracking-cta {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: $cta_font_size;
+  line-height: $cta_font_line_height;
+  color: #fff;
+  margin-left: 15px;
+  outline: none;
+  border: 0;
+  padding: 10px;
+  border-radius: 3px;
+  box-sizing: border-box;
+
+  svg {
+    margin-right: 5px;
+  }
+
+  &__create {
+    border: 1px solid $primary_color;
+    background: $primary_color;
+
+    &--modal {
+      margin: 20px 20px 0px 0px;
+      display: "inline-block";
+    }
+  }
+
+  &__stop {
+    border: 1px solid $secondary_color;
+    background: $secondary_color;
+  }
+}

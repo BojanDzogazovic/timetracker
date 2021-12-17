@@ -1,0 +1,19 @@
+.header {
+  background-color: $secondary_color;
+  border-radius: 0px 0px 22px 22px;
+  padding: 35px 45px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+
+  &__title {
+    font-weight: 700;
+    font-size: $heading_font_size;
+    line-height: $heading_font_line_height;
+    margin: 10px 10px 0 10px;
+  }
+
+  .logo {
+    width: 150px;
+  }
+}
