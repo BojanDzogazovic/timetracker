@@ -78,7 +78,7 @@ export const App = () => {
   useEffect(() => {
     readRecords();
     //eslint-disable-next-line
-  }, []);
+  }, [records.length]);
 
   useEffect(() => {
     if (isRunning) {
@@ -116,6 +116,7 @@ export const App = () => {
           }`,
         },
       });
+
       setRecords(
         records.map((record) =>
           record.id === selectedTimer.id ? selectedTimer : record

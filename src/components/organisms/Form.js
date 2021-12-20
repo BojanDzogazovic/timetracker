@@ -15,7 +15,7 @@ export const Form = ({
     e.preventDefault();
     onFormSubmit(selectedTimer);
 
-    if (records.some((e) => e.id === selectedTimer.id)) {
+    if (records.some((record) => record.id === selectedTimer.id)) {
       setRecords(
         records.map((record) =>
           record.id === selectedTimer.id ? selectedTimer : record
