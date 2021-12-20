@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/timetracker/static/css/main.d6c7de77.css",
-    "main.js": "/timetracker/static/js/main.1aced963.js",
+    "main.js": "/timetracker/static/js/main.bd0b588b.js",
     "static/media/logo.svg": "/timetracker/static/media/logo.a48f5cd7d0e9ea390501801323ac0c24.svg",
     "index.html": "/timetracker/index.html",
     "main.d6c7de77.css.map": "/timetracker/static/css/main.d6c7de77.css.map",
-    "main.1aced963.js.map": "/timetracker/static/js/main.1aced963.js.map"
+    "main.bd0b588b.js.map": "/timetracker/static/js/main.bd0b588b.js.map"
   },
   "entrypoints": [
     "static/css/main.d6c7de77.css",
-    "static/js/main.1aced963.js"
+    "static/js/main.bd0b588b.js"
   ]
 }
