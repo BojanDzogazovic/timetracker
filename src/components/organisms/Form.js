@@ -24,10 +24,11 @@ export const Form = ({
       );
     } else {
       setRecords([...records, selectedTimer]);
+      setCounter((prevState) => prevState + 1);
     }
 
     reset();
-    setCounter((prevState) => prevState + 1);
+
     setDisplayModal(false);
   };
 

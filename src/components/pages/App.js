@@ -78,7 +78,7 @@ export const App = () => {
 
   useEffect(() => {
     readRecords();
-    console.log(counter);
+
     //eslint-disable-next-line
   }, [counter]);
 
@@ -171,6 +171,7 @@ export const App = () => {
               );
               setIsRunning(false);
               updateRecords({ ...selectedTimer, isActive: false });
+
               resetSelected();
             }}
           />
