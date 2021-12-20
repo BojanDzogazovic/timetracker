@@ -25,10 +25,9 @@ import {
 export const App = () => {
   const [displayModalForCreate, setDisplayModalForCreate] = useState(false);
   const [displayModalForUpdate, setDisplayModalForUpdate] = useState(false);
-  const [changer, setChanger] = useState(0);
   const [records, setRecords] = useState();
   const [isRunning, setIsRunning] = useState(false);
-
+  const [isPaused, setIsPaused] = useState(false);
   const [runningHours, setRunningHours] = useState("00");
   const [runningMinutes, setRunningMinutes] = useState("00");
   const [runningSeconds, setRunningSeconds] = useState("00");
@@ -78,8 +77,8 @@ export const App = () => {
 
   useEffect(() => {
     readRecords();
-    // eslint-disable-next-line
-  }, [changer]);
+    //eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (isRunning) {
@@ -96,9 +95,37 @@ export const App = () => {
         setRunningMinutes("00");
         setRunningHours((runningHours) => Number(runningHours) + 1);
       }
+
+      setSelectedTimer({
+        ...selectedTimer,
+        time: {
+          hours: `${
+            runningHours.toString().length < 2
+              ? "0" + runningHours
+              : runningHours
+          }`,
+          minutes: `${
+            runningMinutes.toString().length < 2
+              ? "0" + runningMinutes
+              : runningMinutes
+          }`,
+          seconds: `${
+            runningSeconds.toString().length < 2
+              ? "0" + runningSeconds
+              : runningSeconds
+          }`,
+        },
+      });
+      setRecords(
+        records.map((record) =>
+          record.id === selectedTimer.id ? selectedTimer : record
+        )
+      );
       return () => window.clearInterval(id);
     }
+
     return undefined;
+    //eslint-disable-next-line
   }, [isRunning, runningSeconds, runningMinutes, runningHours]);
 
   return (
@@ -109,8 +136,10 @@ export const App = () => {
         <div className="tracking-ctas">
           <Button
             style={{
-              pointerEvents: isRunning || selectedTimer.id ? "none" : "",
-              opacity: isRunning || selectedTimer.id ? "0.5" : "1",
+              pointerEvents:
+                (isRunning || isPaused) && selectedTimer.isActive ? "none" : "",
+              opacity:
+                (isRunning || isPaused) && selectedTimer.isActive ? "0.5" : "1",
             }}
             icon={<RiIcons.RiTimerLine />}
             text="Start new timer"
@@ -122,40 +151,23 @@ export const App = () => {
           {/* Since there can only be one active stopwatch instead of "Stop all" as on design, it will say just "Stop" and stop active one, and be enabled only if there is active stopwatch*/}
           <Button
             style={{
-              pointerEvents: !isRunning && !selectedTimer.id ? "none" : "",
-              opacity: !isRunning && !selectedTimer.id ? "0.5" : "1",
+              pointerEvents:
+                !isRunning && !selectedTimer.isActive ? "none" : "",
+              opacity: !isRunning && !selectedTimer.isActive ? "0.5" : "1",
             }}
             icon={<RiIcons.RiStopCircleLine />}
             text="Stop"
             classes="tracking-cta tracking-cta__stop"
             onClick={() => {
-              let oldRecords = [...records];
-              oldRecords.find(
-                (record) => record.id === selectedTimer.id
-              ).isActive = false;
-              oldRecords.find((record) => record.id === selectedTimer.id).time =
-                {
-                  hours: `${
-                    runningHours.toString().length < 2
-                      ? "0" + runningHours
-                      : runningHours
-                  }`,
-                  minutes: `${
-                    runningMinutes.toString().length < 2
-                      ? "0" + runningMinutes
-                      : runningMinutes
-                  }`,
-                  seconds: `${
-                    runningSeconds.toString().length < 2
-                      ? "0" + runningSeconds
-                      : runningSeconds
-                  }`,
-                };
-              setRecords(oldRecords);
-              updateRecords(
-                oldRecords.find((record) => record.id === selectedTimer.id)
+              setRecords(
+                records.map((record) =>
+                  record.id === selectedTimer.id
+                    ? { ...selectedTimer, isActive: false }
+                    : record
+                )
               );
               setIsRunning(false);
+              updateRecords({ ...selectedTimer, isActive: false });
               resetSelected();
             }}
           />
@@ -173,21 +185,7 @@ export const App = () => {
                   className="table__cell table__cell--body"
                   style={{ width: "20%" }}
                 >
-                  {record.isActive
-                    ? `${
-                        runningHours.toString().length < 2
-                          ? "0" + runningHours
-                          : runningHours
-                      }:${
-                        runningMinutes.toString().length < 2
-                          ? "0" + runningMinutes
-                          : runningMinutes
-                      }:${
-                        runningSeconds.toString().length < 2
-                          ? "0" + runningSeconds
-                          : runningSeconds
-                      }`
-                    : `${record.time.hours}:${record.time.minutes}:${record.time.seconds}`}
+                  {`${record.time.hours}:${record.time.minutes}:${record.time.seconds}`}
                 </div>
                 <div
                   className="table__cell table__cell--body"
@@ -208,77 +206,48 @@ export const App = () => {
                         }`}
                         onClick={() => {
                           setIsRunning((prevState) => !prevState);
+                          setIsPaused((prevState) => !prevState);
                         }}
                       />
                       <RiIcons.RiStopCircleLine
                         className="table__icon table__icon--secondary"
                         onClick={() => {
-                          let oldRecords = [...records];
-                          oldRecords.find(
-                            (record) => record.id === selectedTimer.id
-                          ).isActive = false;
-                          oldRecords.find(
-                            (record) => record.id === selectedTimer.id
-                          ).time = {
-                            hours: `${
-                              runningHours.toString().length < 2
-                                ? "0" + runningHours
-                                : runningHours
-                            }`,
-                            minutes: `${
-                              runningMinutes.toString().length < 2
-                                ? "0" + runningMinutes
-                                : runningMinutes
-                            }`,
-                            seconds: `${
-                              runningSeconds.toString().length < 2
-                                ? "0" + runningSeconds
-                                : runningSeconds
-                            }`,
-                          };
-                          setRecords(oldRecords);
-                          updateRecords(
-                            oldRecords.find(
-                              (record) => record.id === selectedTimer.id
+                          setRecords(
+                            records.map((record) =>
+                              record.id === selectedTimer.id
+                                ? { ...selectedTimer, isActive: false }
+                                : record
                             )
                           );
+                          setIsRunning(false);
+                          setIsPaused(false);
+                          updateRecords({ ...selectedTimer, isActive: false });
                           resetSelected();
                         }}
-                      />{" "}
+                      />
                     </>
                   ) : (
                     <RiIcons.RiPlayFill
                       className="table__icon table__icon--primary"
                       style={{
-                        pointerEvents:
-                          selectedTimer.id &&
-                          selectedTimer.id !== record.id &&
-                          selectedTimer.isActive !== record.isActive
-                            ? "none"
-                            : "",
-                        opacity:
-                          selectedTimer.id &&
-                          selectedTimer.id !== record.id &&
-                          selectedTimer.isActive !== record.isActive
-                            ? "0.5"
-                            : "1",
+                        pointerEvents: isRunning || isPaused ? "none" : "",
+                        opacity: isRunning || isPaused ? "0.5" : "1",
                       }}
                       onClick={() => {
-                        let oldRecords = [...records];
-                        oldRecords[oldRecords.indexOf(record)].isActive = true;
-                        setSelectedTimer(record);
-                        setRecords(oldRecords);
-                        updateRecords(oldRecords[oldRecords.indexOf(record)]);
-                        setChanger((prevState) => prevState + 1);
+                        setSelectedTimer({ ...record, isActive: true });
+                        setIsRunning(true);
                         setRunningHours(record.time.hours);
                         setRunningMinutes(record.time.minutes);
                         setRunningSeconds(record.time.seconds);
-                        setIsRunning(true);
                       }}
                     />
                   )}
                   <RiIcons.RiPencilLine
                     className="table__icon table__icon--secondary"
+                    style={{
+                      pointerEvents: isRunning || isPaused ? "none" : "",
+                      opacity: isRunning || isPaused ? "0.5" : "1",
+                    }}
                     onClick={() => {
                       setSelectedTimer(record);
                       setDisplayModalForUpdate(true);
@@ -286,6 +255,10 @@ export const App = () => {
                   />
                   <RiIcons.RiDeleteBin6Line
                     className="table__icon table__icon--secondary"
+                    style={{
+                      pointerEvents: isRunning || isPaused ? "none" : "",
+                      opacity: isRunning || isPaused ? "0.5" : "1",
+                    }}
                     onClick={() => {
                       setSelectedTimer(record);
                       deleteRecords(record.id);
@@ -311,7 +284,7 @@ export const App = () => {
               ctaText="Create record"
               records={records}
               setRecords={setRecords}
-              setChanger={setChanger}
+              reset={resetSelected}
             />
           }
           setDisplayModal={setDisplayModalForCreate}
@@ -330,7 +303,7 @@ export const App = () => {
               ctaText="Update record"
               records={records}
               setRecords={setRecords}
-              setChanger={setChanger}
+              reset={resetSelected}
             />
           }
           setDisplayModal={setDisplayModalForUpdate}

@@ -9,7 +9,7 @@ export const Form = ({
   ctaText,
   records,
   setRecords,
-  setChanger,
+  reset,
 }) => {
   const onSubmit = (e) => {
     e.preventDefault();
@@ -18,14 +18,13 @@ export const Form = ({
     if (records.some((e) => e.id === selectedTimer.id)) {
       setRecords(
         records.map((record) =>
-          record.id === selectedTimer.id ? { ...record, selectedTimer } : record
+          record.id === selectedTimer.id ? selectedTimer : record
         )
       );
     } else {
       setRecords([...records, selectedTimer]);
     }
-
-    setChanger((prevState) => prevState + 1);
+    reset();
     setDisplayModal(false);
   };
 
