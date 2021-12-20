@@ -28,6 +28,7 @@ export const App = () => {
   const [records, setRecords] = useState();
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [counter, setCounter] = useState(0);
   const [runningHours, setRunningHours] = useState("00");
   const [runningMinutes, setRunningMinutes] = useState("00");
   const [runningSeconds, setRunningSeconds] = useState("00");
@@ -77,8 +78,9 @@ export const App = () => {
 
   useEffect(() => {
     readRecords();
+    console.log(counter);
     //eslint-disable-next-line
-  }, [records.length]);
+  }, [counter]);
 
   useEffect(() => {
     if (isRunning) {
@@ -285,6 +287,7 @@ export const App = () => {
               ctaText="Create record"
               records={records}
               setRecords={setRecords}
+              setCounter={setCounter}
               reset={resetSelected}
             />
           }
@@ -304,6 +307,7 @@ export const App = () => {
               ctaText="Update record"
               records={records}
               setRecords={setRecords}
+              setCounter={setCounter}
               reset={resetSelected}
             />
           }

@@ -9,6 +9,7 @@ export const Form = ({
   ctaText,
   records,
   setRecords,
+  setCounter,
   reset,
 }) => {
   const onSubmit = (e) => {
@@ -24,7 +25,9 @@ export const Form = ({
     } else {
       setRecords([...records, selectedTimer]);
     }
+
     reset();
+    setCounter((prevState) => prevState + 1);
     setDisplayModal(false);
   };
 
